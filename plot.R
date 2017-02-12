@@ -20,3 +20,14 @@ legend('topright', legend = c('Retnet genes','Non-Retnet genes'), col = c(2,4),
        lty = 1, merge = TRUE)   #, trace = TRUE)
 axis(side=1, at = meet, labels='')
 axis(side=1, at = 30, labels=sprintf("%.3f",meet), cex.axis=0.8, tck=0)
+
+# integrate to find tp, fp, tn, fn
+tp = integrate(fs[[1]], lower=meet, upper=Inf)$value
+fp = integrate(fs[[2]], lower=meet, upper=Inf)$value
+tn = integrate(fs[[1]], lower=0, upper=meet)$value
+fn = integrate(fs[[2]], lower=0, upper=meet)$value
+# precision / recall
+precision = tp / (tp + fp)
+# 0.9444899
+recall = tp / (tp + fn)
+# 0.6220918
